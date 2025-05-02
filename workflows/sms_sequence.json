@@ -1,0 +1,18 @@
+{
+  "campaign": "A",
+  "steps": [
+    {"step": 1, "message": "Hi {{First Name}}, are you interested in our new offer?", "trackReplies": true},
+    {"step": 2, "message": "Just checking in, {{First Name}}. Any questions?", "trackReplies": true},
+    {"step": 3, "message": "We have a special deal for you!", "trackReplies": false},
+    {"step": 4, "message": "Reply YES to learn more.", "trackReplies": true},
+    {"step": 5, "message": "Our team is ready to help you.", "trackReplies": false},
+    {"step": 6, "message": "Did you get our last message?", "trackReplies": true},
+    {"step": 7, "message": "This is a limited-time offer.", "trackReplies": false},
+    {"step": 8, "message": "Let us know if you want to opt out.", "trackReplies": true},
+    {"step": 9, "message": "Final reminder: reply to claim your offer!", "trackReplies": true},
+    {"step": 10, "message": "Thank you for your time, {{First Name}}.", "trackReplies": false}
+  ],
+  "replyTracking": {
+    "masterLevel": true
+  }
+} 

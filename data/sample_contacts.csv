@@ -1,0 +1,11 @@
+First Name,Last Name,Email,Phone 1,Phone 2,Phone 3,Custom Field 1,Custom Field 2,Last Activity
+John,Doe,john.doe@example.com,+15551234567,+15557654321,,VIP,Tag1,2024-01-10
+Jane,Smith,jane.smith@example.com,+15559876543,,+15553456789,Regular,Tag2,2024-03-15
+Bob,Johnson,bob.j@example.com,,+15552345678,+15554567890,VIP,Tag3,2023-12-01
+Alice,Williams,alice.w@example.com,+15551239876,,,+1555,Tag4,2024-04-20
+Tom,Brown,tom.brown@example.com,+15558765432,+15557651234,,Regular,Tag5,2023-11-05
+Sara,Lee,sara.lee@example.com,,+15553456789,,VIP,Tag6,2024-02-28
+Mike,Wilson,mike.wilson@example.com,+15552349876,,+15554561234,Regular,Tag7,2024-05-01
+Emma,Moore,emma.moore@example.com,+15551237654,+15557659876,,VIP,Tag8,2023-10-15
+Chris,Taylor,chris.taylor@example.com,,+15553451234,+15554569876,Regular,Tag9,2024-01-25
+Olivia,Anderson,olivia.anderson@example.com,+15552347654,,+15554563412,VIP,Tag10,2024-03-30 

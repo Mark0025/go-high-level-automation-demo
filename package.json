@@ -1,0 +1,21 @@
+{
+  "name": "ghl-automation-demo",
+  "version": "1.0.0",
+  "description": "Demo project for Go High Level Automation & CRM Specialist skills showcase.",
+  "main": "scripts/import_contacts.js",
+  "scripts": {
+    "validate-csv": "node scripts/validate_csv.js",
+    "import-contacts": "node scripts/import_contacts.js",
+    "phone-validation": "node scripts/phone_validation.js",
+    "clone-sms-workflow": "node scripts/clone_sms_workflow.js",
+    "zapier-webhook": "node scripts/zapier_webhook.js",
+    "data-purge": "node scripts/data_purge.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parse": "^5.5.0",
+    "csv-stringify": "^6.3.0",
+    "libphonenumber-js": "^1.10.25"
+  }
+} 
