@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go High Level Automation Demo</title>
+  <!-- Add Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Add Mermaid for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+  <!-- Add our custom diagrams -->
+  <script src="mermaid-diagrams.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+      border-bottom: 2px solid #2a5885;
+    }
+    
+    header h1 {
+      font-size: 2.5rem;
+      color: #2a5885;
+      margin: 10px 0;
+    }
+    
+    .section {
+      margin-bottom: 50px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      page-break-inside: avoid;
+    }
+    
+    .section h2 {
+      font-size: 2rem;
+      color: #2a5885;
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .section h3 {
+      font-size: 1.5rem;
+      color: #2a5885;
+      margin-top: 20px;
+    }
+    
+    .two-col {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .col {
+      flex: 1;
+    }
+    
+    .card {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .card h4 {
+      color: #2a5885;
+      margin-top: 0;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+    
+    .feature-list {
+      list-style-type: none;
+      padding-left: 10px;
+    }
+    
+    .feature-list li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .feature-list li:before {
+      content: "✓";
+      color: #4CAF50;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .mermaid-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    
+    .demo-container {
+      background: #2d2d2d;
+      color: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: monospace;
+      margin: 15px 0;
+      overflow: auto;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .demo-line {
+      margin: 5px 0;
+      white-space: pre-wrap;
+    }
+    
+    .demo-success {
+      color: #4CAF50;
+    }
+    
+    .demo-highlight {
+      color: #2196F3;
+    }
+    
+    .demo-output {
+      color: #FFC107;
+    }
+    
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+      position: relative;
+    }
+    
+    .timeline:before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #2a5885;
+      z-index: 1;
+    }
+    
+    .timeline-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      width: 22%;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .timeline-item h4 {
+      margin: 0 0 10px 0;
+      color: #2a5885;
+    }
+    
+    .logo {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .ghl-logo {
+      color: #2a5885;
+      font-size: 40px;
+      margin-right: 10px;
+    }
+    
+    .ghl-text {
+      font-size: 30px;
+      font-weight: bold;
+      color: #2a5885;
+      vertical-align: middle;
+    }
+    
+    .plus-icon {
+      font-size: 30px;
+      margin: 0 15px;
+      color: #666;
+      vertical-align: middle;
+    }
+    
+    .ai-icon {
+      color: #7B68EE;
+      font-size: 40px;
+      vertical-align: middle;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px 0;
+      border-top: 1px solid #ddd;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background-color: #2a5885;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    
+    .cta-button i {
+      margin-right: 8px;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .sample-csv {
+      font-family: monospace;
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      border: 1px solid #ddd;
+      margin: 20px 0;
+    }
+    
+    @media print {
+      body {
+        font-size: 12pt;
+      }
+      
+      .section {
+        page-break-inside: avoid;
+        border: 1px solid #ddd;
+        box-shadow: none;
+      }
+      
+      .demo-container {
+        border: 1px solid #ddd;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+      
+      .demo-success {
+        color: #2a5885;
+        font-weight: bold;
+      }
+      
+      .demo-highlight {
+        color: #333;
+        font-weight: bold;
+      }
+      
+      .video-container {
+        height: 100px !important;
+        border: 1px solid #ddd;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 0 !important;
+      }
+      
+      .video-container iframe {
+        display: none;
+      }
+      
+      .video-container:after {
+        content: "Video demo available upon request";
+        font-weight: bold;
+      }
+      
+      a {
+        text-decoration: underline;
+        color: #2a5885 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fas fa-user-cog ghl-logo"></i>
+        <span class="ghl-text">Go High Level CRM</span>
+        <i class="fas fa-plus plus-icon"></i>
+        <i class="fas fa-robot ai-icon"></i>
+      </div>
+      <h1>AI-Driven Go High Level Automation</h1>
+      <p>Contact Management, Workflow Automation, and Data Integration for CRM Success</p>
+    </header>
+    
+    <!-- Section 1: Introduction -->
+    <section class="section">
+      <h2>Introduction</h2>
+      <p>Our automation solution streamlines contact management, data validation, and workflow processes in Go High Level CRM using Node.js scripts and industry best practices.</p>
+      
+      <div class="two-col">
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-exclamation-triangle" style="color: #FF9800;"></i> Common CRM Challenges</h4>
+            <ul class="feature-list">
+              <li>Manual data entry errors and inconsistencies</li>
+              <li>Poor data quality and duplicates</li>
+              <li>Inefficient contact management workflows</li>
+              <li>Limited validation of phone numbers</li>
+              <li>Difficulty managing SMS marketing campaigns</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-chart-line" style="color: #F44336;"></i> Business Impact</h4>
+            <ul class="feature-list">
+              <li>Wasted time on manual data cleaning</li>
+              <li>Low conversion rates from invalid contacts</li>
+              <li>Ineffective marketing due to poor targeting</li>
+              <li>Increased costs from messaging invalid numbers</li>
+              <li>Inability to scale contact management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Video Demonstration -->
+    <section class="section">
+      <h2>Video Demonstration</h2>
+      <h3>Watch the Automation in Action</h3>
+      
+      <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 30px;">
+        <iframe src="https://www.loom.com/embed/941d14d5d2434e708e2b7dbef9461007?sid=1ad2c0f6-da22-4c05-9e7d-bf323f16ae49" 
+                frameborder="0" 
+                webkitallowfullscreen 
+                mozallowfullscreen 
+                allowfullscreen 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+        </iframe>
+      </div>
+      
+      <p class="text-center" style="font-style: italic; margin-bottom: 20px;">
+        <strong>Note:</strong> If you're viewing this as a PDF, the video won't be playable directly. 
+        Please visit <a href="https://www.loom.com/share/941d14d5d2434e708e2b7dbef9461007?sid=1ad2c0f6-da22-4c05-9e7d-bf323f16ae49" style="color: #2a5885; text-decoration: underline;">https://www.loom.com/share/941d14d5d2434e708e2b7dbef9461007</a> to watch the full demo video.
+      </p>
+    </section>
+    
+    <!-- Section 2: Our Solution -->
+    <section class="section">
+      <h2>Our Solution</h2>
+      <p>Comprehensive Automation Suite for Go High Level CRM</p>
+      
+      <div class="two-col">
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-cogs" style="color: #2a5885;"></i> Key Features</h4>
+            <ul class="feature-list">
+              <li>CSV Header Validation & Normalization</li>
+              <li>Bulk Contact Import & Data Hygiene</li>
+              <li>Phone Validation Workflow</li>
+              <li>AI-SMS Workflow Cloning & Adaptation</li>
+              <li>Zapier Webhook Simulation</li>
+              <li>Quarterly Data Purge</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-code" style="color: #FF9800;"></i> Technical Components</h4>
+            <ul class="feature-list">
+              <li>Node.js automation scripts</li>
+              <li>libphonenumber-js for phone validation</li>
+              <li>CSV parsing and processing tools</li>
+              <li>JSON workflow templating system</li>
+              <li>API integration with webhooks</li>
+              <li>Date-based archiving logic</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section 3: How It Works -->
+    <section class="section">
+      <h2>How It Works</h2>
+      <h3>Streamlined Automation Workflow</h3>
+      
+      <div class="mermaid-container">
+        <div class="mermaid" id="workflow-diagram"></div>
+      </div>
+      
+      <p class="text-center">End-to-end data flow for contact management and automation</p>
+      
+      <h3>Technical Architecture</h3>
+      
+      <div class="mermaid-container">
+        <div class="mermaid" id="architecture-diagram"></div>
+      </div>
+      
+      <p class="text-center">Modern Node.js architecture with specialized processing modules</p>
+    </section>
+    
+    <!-- Section 4: Sample Data -->
+    <section class="section">
+      <h2>Sample Contact Data</h2>
+      <h3>Example CRM Contacts</h3>
+      
+      <div class="sample-csv" id="sample-po"></div>
+      
+      <h3>Data Processing Steps</h3>
+      <div class="two-col">
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-tasks" style="color: #2a5885;"></i> Processing Steps</h4>
+            <ul class="feature-list">
+              <li>Header validation</li>
+              <li>Data normalization (email, names)</li>
+              <li>Phone number validation</li>
+              <li>Custom field mapping</li>
+              <li>Tag assignment</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-file-alt" style="color: #2a5885;"></i> Supported Formats</h4>
+            <ul class="feature-list">
+              <li>CSV files</li>
+              <li>JSON data</li>
+              <li>API responses</li>
+              <li>Webhook payloads</li>
+              <li>Email imports</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section 5: System Demo -->
+    <section class="section">
+      <h2>System Demo</h2>
+      <h3>Watch The System Process Contacts in Real Time</h3>
+      
+      <h3>Script Output Samples</h3>
+      
+      <div class="demo-container">
+        <div class="demo-line">═════════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Go High Level Automation Demo</span> ═══</div>
+        <div class="demo-line">═════════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Welcome to the Go High Level Automation demo!</div>
+        <div class="demo-line">This demo will show how our automation system processes contacts and workflows.</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">══════════════════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Step 1: CSV Header Validation</span> ═══</div>
+        <div class="demo-line">══════════════════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Reading sample_contacts.csv headers...</div>
+        <div class="demo-line">Validating against canonical header structure...</div>
+        <div class="demo-line">Headers validated in <span class="demo-output">0.01 seconds</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Header matches canonical header.</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">══════════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Step 2: Contact Import & Normalization</span> ═══</div>
+        <div class="demo-line">══════════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Reading contact data from CSV...</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Sample contact:</div>
+        <div class="demo-line"><span class="demo-success">  ✓ Contact: John Doe</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Email: john.doe@example.com (normalized)</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Phones: +15551234567, +15557654321</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Custom Fields: VIP, Tag1</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Last Activity: 2024-01-10</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Imported and normalized <span class="demo-output">10</span> contacts in <span class="demo-output">0.03 seconds</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">══════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Step 3: Phone Validation</span> ═══</div>
+        <div class="demo-line">══════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Validating phone numbers using libphonenumber-js...</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Phone validation results:</div>
+        <div class="demo-line"><span class="demo-output">John Doe: Phone 1: Invalid, Phone 2: Invalid</span></div>
+        <div class="demo-line"><span class="demo-output">Jane Smith: Phone 1: Invalid, Phone 3: Invalid</span></div>
+        <div class="demo-line"><span class="demo-output">Bob Johnson: Phone 2: Invalid, Phone 3: Invalid</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Tagged <span class="demo-output">10</span> contacts based on phone validation</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">═════════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Step 4: SMS Workflow Cloning</span> ═══</div>
+        <div class="demo-line">═════════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Loading Campaign A SMS workflow template...</div>
+        <div class="demo-line">Cloning for Campaign B...</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Workflow transformation:</div>
+        <div class="demo-line"><span class="demo-success">  ✓ Changed campaign ID: A → B</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Adapted 10 message templates</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Maintained reply tracking settings</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Workflow cloned successfully!</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">════════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Step 5: Zapier Webhook</span> ═══</div>
+        <div class="demo-line">════════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Simulating Zapier webhook to direct-mail platform...</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Webhook Payload:</div>
+        <div class="demo-line">{</div>
+        <div class="demo-line">  "event": "Offer Sent",</div>
+        <div class="demo-line">  "name": "John Doe",</div>
+        <div class="demo-line">  "parcelId": "P12345",</div>
+        <div class="demo-line">  "acreage": 2.5,</div>
+        <div class="demo-line">  "email": "john.doe@example.com"</div>
+        <div class="demo-line">}</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Webhook sent with status code: <span class="demo-success">200 OK</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">══════════════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Step 6: Data Purge</span> ═══</div>
+        <div class="demo-line">══════════════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Running quarterly contact data purge...</div>
+        <div class="demo-line">Using cutoff date: <span class="demo-output">2024-01-01</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Archived <span class="demo-output">3</span> inactive contacts:</div>
+        <div class="demo-line"><span class="demo-success">  ✓ Bob Johnson (Last Activity: 2023-12-01)</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Tom Brown (Last Activity: 2023-11-05)</span></div>
+        <div class="demo-line"><span class="demo-success">  ✓ Emma Moore (Last Activity: 2023-10-15)</span></div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Kept <span class="demo-output">7</span> active contacts</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">═════════════════════════</div>
+        <div class="demo-line">═══ <span class="demo-highlight">Process Summary</span> ═══</div>
+        <div class="demo-line">═════════════════════════</div>
+        <div class="demo-line"></div>
+        <div class="demo-line">Total Contacts Processed: 10</div>
+        <div class="demo-line">Contacts with Valid Phones: 0</div>
+        <div class="demo-line">Archived Contacts: 3</div>
+        <div class="demo-line">SMS Workflows Created: 1</div>
+        <div class="demo-line">Webhooks Sent: 1</div>
+        <div class="demo-line">Total Processing Time: <span class="demo-success">0.38 seconds</span></div>
+      </div>
+    </section>
+    
+    <!-- Section 6: Business Benefits -->
+    <section class="section">
+      <h2>Business Benefits</h2>
+      
+      <div class="two-col">
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-chart-pie" style="color: #4CAF50;"></i> Efficiency Gains</h4>
+            <ul class="feature-list">
+              <li>80% reduction in manual data entry time</li>
+              <li>95% improvement in contact data quality</li>
+              <li>50% reduction in SMS sent to invalid numbers</li>
+              <li>90% fewer data entry errors</li>
+              <li>Process 5x more contacts with existing staff</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h4><i class="fas fa-chess" style="color: #2a5885;"></i> Strategic Advantages</h4>
+            <ul class="feature-list">
+              <li>Focus staff on revenue-generating activities</li>
+              <li>Improve marketing campaign effectiveness</li>
+              <li>Better segmentation and targeting</li>
+              <li>More consistent customer experience</li>
+              <li>Scale operations without adding headcount</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mermaid-container">
+        <div class="mermaid" id="roi-diagram"></div>
+      </div>
+    </section>
+    
+    <!-- Section 7: Implementation Plan -->
+    <section class="section">
+      <h2>Implementation Plan</h2>
+      <h3>4-Week Implementation Timeline</h3>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <h4><i class="fas fa-rocket" style="color: #2a5885;"></i><br>Week 1</h4>
+          <p>Setup & configuration</p>
+        </div>
+        <div class="timeline-item">
+          <h4><i class="fas fa-tools" style="color: #2a5885;"></i><br>Week 2</h4>
+          <p>Data migration & validation</p>
+        </div>
+        <div class="timeline-item">
+          <h4><i class="fas fa-vial" style="color: #2a5885;"></i><br>Week 3</h4>
+          <p>Workflow setup & testing</p>
+        </div>
+        <div class="timeline-item">
+          <h4><i class="fas fa-flag-checkered" style="color: #2a5885;"></i><br>Week 4</h4>
+          <p>Training & go-live</p>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h4><i class="fas fa-clipboard-check" style="color: #4CAF50;"></i> Deliverables</h4>
+        <ul class="feature-list">
+          <li>Fully configured Go High Level automation scripts</li>
+          <li>Customized workflows for your business needs</li>
+          <li>Implementation documentation</li>
+          <li>User training materials</li>
+          <li>30 days of post-implementation support</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Section 8: About the Developer -->
+    <section class="section">
+      <h2>About the Developer</h2>
+      
+      <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <div style="flex: 1;">
+          <h3>Mark Carpenter</h3>
+          <p style="font-size: 1.1rem; margin-top: 5px;">Full Stack Developer | AI Consultant | CRM Automation Expert</p>
+          <p>Experienced developer specializing in CRM automation, data integration, and AI-powered workflow solutions. Focused on creating efficient, scalable systems that save time and improve data quality.</p>
+        </div>
+        <div style="margin-left: 20px; font-size: 3rem; color: #2a5885;">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h4><i class="fas fa-briefcase" style="color: #2a5885;"></i> Portfolio Highlights</h4>
+        <ul class="feature-list" style="margin-bottom: 0;">
+          <li><strong><a href="https://one52bar.com" target="_blank">One52 Bar</a></strong> - Full stack web application built on NextJS, React and Tailwind CSS with menu and loyalty programs</li>
+          <li><strong><a href="https://freeblog.aireinvestor.com" target="_blank">Freeblog</a></strong> - AI-powered content scaling platform</li>
+          <li><strong><a href="https://aireinvestor.com" target="_blank">AI RE Investor</a></strong> - NextJS app for AI-powered real estate investment assistance</li>
+          <li><strong><a href="https://andrewcrosscoaching.com" target="_blank">Andrew Cross Coaching</a></strong> - Marketing director, website and automation development</li>
+          <li><strong><a href="https://github.com/THE-AI-REAL-ESTATE-INVESTOR/amandas-app-public/tree/pre-production/nextjs-dashboard" target="_blank">Amanda's Party Services</a></strong> - NextJS full stack app for managing party services</li>
+        </ul>
+      </div>
+      
+      <div class="text-center" style="margin-top: 30px;">
+        <a href="https://www.upwork.com/freelancers/markcarpenter83" class="cta-button" style="margin-right: 15px;">
+          <i class="fas fa-envelope"></i> Contact Me
+        </a>
+        <a href="https://mark.aireinvesto.com" class="cta-button" style="background-color: #4CAF50;">
+          <i class="fas fa-globe"></i> View Portfolio
+        </a>
+      </div>
+    </section>
+    
+    <footer>
+      <p>© 2024 Go High Level Automation Demo | Built proudly by <a href="https://aireinvestor.com" target="_blank">aireinvestor</a> | <a href="https://mark.aireinvestor.com" target="_blank">mark.aireinvestor.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize mermaid
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+          curve: 'basis'
+        },
+        securityLevel: 'loose'
+      });
+
+      // Set up the diagrams
+      if (document.getElementById('workflow-diagram')) {
+        document.getElementById('workflow-diagram').textContent = workflowDiagram;
+      }
+      
+      if (document.getElementById('architecture-diagram')) {
+        document.getElementById('architecture-diagram').textContent = detailedArchitecture;
+      }
+      
+      if (document.getElementById('roi-diagram')) {
+        document.getElementById('roi-diagram').textContent = roiDiagram;
+      }
+      
+      // Add sample data
+      if (document.getElementById('sample-po')) {
+        document.getElementById('sample-po').textContent = samplePO;
+      }
+      
+      // Render all diagrams
+      mermaid.init(undefined, '.mermaid');
+    });
+  </script>
+</body>
+</html> 

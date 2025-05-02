@@ -16,6 +16,7 @@
   "dependencies": {
     "csv-parse": "^5.5.0",
     "csv-stringify": "^6.3.0",
-    "libphonenumber-js": "^1.10.25"
+    "libphonenumber-js": "^1.10.25",
+    "puppeteer": "^21.9.0"
   }
-} 
+}
